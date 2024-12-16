@@ -21,42 +21,48 @@ const {
 } = Astro.props;
 
 let base_url;
-let posts;
-if (page_type === "blog") {
-  base_url = import.meta.env.BLOG_SLUG;
-  posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+let posts = []; // Initialize posts as an empty array to avoid undefined errors
 
-  if (post_tag && post_tag.length > 0)
-    posts = posts.filter(
-      (post) =>
-        post.data?.tag &&
-        post_tag.some((t) => post.data?.tag && post.data.tag.includes(t)),
-    );
+// Retrieve and sort posts based on page_type
+try {
+  if (page_type === "blog") {
+    base_url = import.meta.env.BLOG_SLUG;
+    posts = (await getCollection("blog")) || []; // Fallback to empty array if undefined
+    posts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  
+    if (post_tag && post_tag.length > 0) {
+      posts = posts.filter(
+        (post) =>
+          post.data?.tag &&
+          post_tag.some((t) => post.data?.tag && post.data.tag.includes(t))
+      );
+    }
+  }
+
+  if (page_type === "menu") {
+    base_url = import.meta.env.MENU_SLUG;
+    posts = (await getCollection("menu")) || []; // Fallback to empty array if undefined
+    posts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  }
+
+  if (page_type === "project") {
+    base_url = import.meta.env.PORTFOLIO_SLUG;
+    posts = (await getCollection("project")) || []; // Fallback to empty array if undefined
+    posts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    if (portfolio_tag && portfolio_tag.length > 0) {
+      posts = posts.filter(
+        (post) =>
+          post.data?.tag &&
+          portfolio_tag.some((t) => post.data?.tag && post.data.tag.includes(t))
+      );
+    }
+  }
+
+  // Limit the number of posts if 'count' is specified
+  if (count && count > 0) posts = posts.slice(0, count);
+} catch (error) {
+  console.error("Error fetching posts:", error);
 }
-
-if (page_type === "menu") {
-  base_url = import.meta.env.MENU_SLUG;
-  posts = (await getCollection("menu")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
-}
-
-if (page_type === "project") {
-  base_url = import.meta.env.PORTFOLIO_SLUG;
-  posts = (await getCollection("project")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
-  if (portfolio_tag && portfolio_tag.length > 0)
-    posts = posts.filter(
-      (post) =>
-        post.data?.tag &&
-        portfolio_tag.some((t) => post.data?.tag && post.data.tag.includes(t)),
-    );
-}
-
-if (count && count > 0) posts = posts.slice(0, count);
 
 const sizes = getGridImageSizes(container);
 ---
@@ -143,12 +149,12 @@ const sizes = getGridImageSizes(container);
 
 <style lang="postcss">
 .recent-blogs ul.bloglist {
-		width: calc(100% + var(--container-spacing));
-		margin-left: calc(var(--spacing) * -1);
-		
-		@screen md {  
-			width: 100%;
-			margin-left: 0;                      
-		}
-	}
+    width: calc(100% + var(--container-spacing));
+    margin-left: calc(var(--spacing) * -1);
+
+    @screen md {  
+        width: 100%;
+        margin-left: 0;                      
+    }
+}
 </style>

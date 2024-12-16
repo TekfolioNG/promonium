@@ -13,6 +13,8 @@ import { t } from "@util/translate";
 import "@fontsource-variable/inter-tight";
 import "@fontsource-variable/inter-tight/wght-italic.css";
 
+
+
 const lang = import.meta.env.WEBSITE_LANGUAGE;
 const currency = import.meta.env.CURRENCY;
 const snipcartKey = import.meta.env.SNIPCART_KEY;
@@ -28,8 +30,7 @@ const contact = await getEntry("config", "contact");
     <BaseHead
       title={title}
       description={description}
-      thumbnail={!!og_image ? og_image : thumbnail}
-    />
+         />
   </head>
   <body class={`surface-base ${pageClass || ""}`}>
     {
@@ -113,3 +114,4 @@ const contact = await getEntry("config", "contact");
     </script>
   </body>
 </html>
+

@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watchEffect } from "vue";
 import { usePointer } from "@vueuse/core";
+import { onMounted, ref, watchEffect } from "vue";
 const shop = ref(null);
 const scripLoaded = ref(false);
 const pointer = usePointer();
@@ -247,3 +247,4 @@ onMounted(() => {
   position: absolute;
 }
 </style>
+

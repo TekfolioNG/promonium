@@ -1,6 +1,8 @@
 import { defineConfig } from "astro-imagetools/config";
 
 export default defineConfig({
+
+  
   format: ["webp"],
 
   formatOptions: {
@@ -30,4 +32,5 @@ export default defineConfig({
       effort: 10.0,
     },
   },
+  
 });

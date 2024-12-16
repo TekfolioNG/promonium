@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    --color-primary: 75 38 143; /* 135 94 212 */
+    --color-primary: 0 0 102; /* 135 94 212 */
     --color-secondary: 107 154 199;
     --color-accent: 119 112 150;
     --color-warning: 202 121 45;
@@ -31,7 +31,7 @@
 
   [data-theme="dark"] {
     body {
-      --color-primary: 135 94 212;
+      --color-primary: 255 0 0;
       --color-secondary: 107 154 199;
       --color-accent: 119 112 150;
       --color-warning: 202 121 45;
@@ -56,7 +56,7 @@ body {
 }
 
 .surface-base {
-  @apply bg-light text-dark dark:bg-dark dark:text-light;
+  @apply bg-[#F0FDFF] text-dark dark:bg-dark dark:text-light;
 }
 
 .surface-primary {
@@ -134,7 +134,7 @@ body {
 @font-face {
   font-family: "Adjusted Arial Fallback";
   src: local(Arial);
-  size-adjust: 105%;
+  size-adjust: 100%;
   ascent-override: normal;
   descent-override: normal;
   line-gap-override: normal;
@@ -340,19 +340,25 @@ body {
   }
 }
 
+
 /* TYPOGRAFY */
+
+
 
 .title {
   @apply text-4xl font-extrabold sm:text-6xl md:text-5xl lg:text-7xl;
   text-wrap: balance;
+  margin-bottom: 2rem;
 
   &-md {
     @apply text-2xl font-extrabold sm:text-4xl md:text-5xl lg:text-5xl;
     text-wrap: balance;
+    margin-bottom: 2px;
   }
   &-sm {
     @apply text-3xl font-extrabold sm:text-4xl;
     text-wrap: balance;
+    margin-bottom: 2px;
   }
 }
 
@@ -485,8 +491,19 @@ a.link-underline {
   --pagefind-ui-font: inherit;
 }
 
-[data-is-scrolling-up="false"][data-is-top="false"] {
-  .nav {
-    @apply -translate-y-full;
+.nav-mobile {
+  @apply overflow-x-hidden overflow-y-scroll sticky top-0;
+  z-index: 999998;
+  scrollbar-width: none;
+  padding-bottom: calc(2em + env(safe-area-inset-bottom));
+
+  &-btn {
+    z-index: 999999;
   }
 }
+
+.video-fullwidth {
+  width: 100%;
+  max-width: 100%;
+}
+

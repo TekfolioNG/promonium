@@ -1,5 +1,6 @@
 <template>
-  <button
+<div class="sticky top-0 z-50">
+<button
     :aria-label="show ? translations.close : translations.menu"
     @click="toggleMenu()"
     :class="` nav-mobile-btn relative  ml-auto flex  text-primary md:hidden ${
@@ -10,6 +11,7 @@
 
     <slot name="close" class="w-7" v-if="show" />
   </button>
+  
   <transition name="nested">
     <div
       class="surface-menu nav-mobile fixed inset-0 grid h-full auto-rows-min place-items-center gap-4 px-4 pt-4"
@@ -22,6 +24,8 @@
       <slot name="social" />
     </div>
   </transition>
+  
+</div>
 </template>
 
 <script setup>

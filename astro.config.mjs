@@ -1,19 +1,18 @@
-import { defineConfig } from "astro/config";
-import { astroImageTools } from "astro-imagetools";
-import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
-import m2dx from "astro-m2dx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import rehypeExternalLinks from "rehype-external-links";
 import fauxRemarkEmbedder from "@remark-embedder/core";
 import fauxOembedTransformer from "@remark-embedder/transformer-oembed";
+import icon from "astro-icon";
+import { astroImageTools } from "astro-imagetools";
+import m2dx from "astro-m2dx";
+import { defineConfig } from "astro/config";
+import rehypeExternalLinks from "rehype-external-links";
 
 const remarkEmbedder = fauxRemarkEmbedder.default;
 const oembedTransformer = fauxOembedTransformer.default;
 
 import vue from "@astrojs/vue";
-/** @type {import('astro-m2dx').Options} */
 
 const m2dxOptions = {
   exportComponents: true,
@@ -23,17 +22,37 @@ const m2dxOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://nebulix.unfolding.io",
+  site: "https://promoniumng.com",
   integrations: [
-    icon(),
+    icon({
+      include: {
+        local: [
+          "pro-box",
+          "pro-truck",
+          "pro-fulfilment",
+          "pro-consult",
+          "pro-security",
+          "pro-warehouse",
+          "pro-inventory",
+          "pro--distribution",
+          "proi--storage",
+          "pro-order-complete",
+        ],
+      },
+      paths: {
+        local: "/src/icons/", // Path to your icons folder
+      },
+    }),
     mdx({}),
     sitemap(),
     tailwind(),
     vue({
       appEntrypoint: "/src/pages/_app",
+      jsx: true,
     }),
     astroImageTools,
   ],
+  
   markdown: {
     extendDefaultPlugins: true,
     remarkPlugins: [
@@ -65,8 +84,10 @@ export default defineConfig({
         ],
       },
       assetsInlineLimit: 10096,
+      assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.ogg", "**/*.png"], // Includes video assets
     },
   },
+
   build: {
     inlineStylesheets: "always",
   },

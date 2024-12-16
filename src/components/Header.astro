@@ -1,4 +1,4 @@
----
+promonium---
 import NavMobile from "@components/navigation/NavMobile.vue";
 import { Icon } from "astro-icon/components";
 
@@ -17,16 +17,16 @@ const isActive = (href) => {
 ---
 
 <header class="surface-menu nav sticky top-0 z-50" transition:name="nav">
-  <nav class="container-xl flex flex-nowrap items-stretch gap-6">
+  <nav class="container-xl flex flex-nowrap items-center gap-6">
     <a
-      href="/"
+      href="#"
       aria-label={title}
       class="grid place-items-center py-3 text-primary"
-      ><Icon name="logo" class="h-6" /></a
+      ><Icon name="logo" class="h-20 w-20" /></a
     >
     {
       menu && (
-        <ul class="nav-underline nav-links relative hidden flex-nowrap pl-4 uppercase tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50 md:flex ">
+        <ul class="nav-underline nav-links relative hidden flex-nowrap pl-4 tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50 md:flex ">
           {menu.map((link) => (
             <li class={`${isActive(link.href) ? "active font-semibold" : ""}`}>
               <a href={link.href} class={`block py-3`}>
@@ -40,7 +40,7 @@ const isActive = (href) => {
 
     {
       (
-        <ul class="nav-underline relative -mr-4  ml-auto flex flex-nowrap justify-end pl-4 uppercase md:mr-0">
+        <ul class="nav-underline relative -mr-4  ml-auto flex flex-nowrap justify-end pl-4 md:mr-0">
           <li>
             <CartButton
               label={t("cart")}
