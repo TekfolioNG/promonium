@@ -9,23 +9,17 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
-const props = defineProps({
-  videoFile: {
-    type: String,
-    required: true
-  },
-  videoPoster: {
-    type: String,
-    required: true
-  }
-})
+// Import video and poster files dynamically
+import posterFile from '../assets/promonium-cover4.png';
+import videoFile from '../assets/promonium-logistics.mp4';
 
-const videoPath = computed(() => `/src/assets/${props.videoFile}`)
-const posterPath = computed(() => `/src/assets/${props.videoPoster}`)
 
-const videoElement = ref(null)
+const videoPath = videoFile;
+const posterPath = posterFile;
+
+const videoElement = ref(null);
 </script>
 
 <style scoped>
