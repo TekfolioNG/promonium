@@ -82,6 +82,7 @@ const props = defineProps({
 .fade-in2 {
   animation: fadeIn 0.5s;
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

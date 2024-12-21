@@ -1,4 +1,4 @@
-promonium---
+---
 import NavMobile from "@components/navigation/NavMobile.vue";
 import { Icon } from "astro-icon/components";
 
@@ -16,132 +16,110 @@ const isActive = (href) => {
 };
 ---
 
-<header class="surface-menu nav sticky top-0 z-50" transition:name="nav">
-  <nav class="container-xl flex flex-nowrap items-center gap-6">
-    <a
-      href="#"
-      aria-label={title}
-      class="grid place-items-center py-3 text-primary"
-      ><Icon name="logo" class="h-20 w-20" /></a
-    >
-    {
-      menu && (
-        <ul class="nav-underline nav-links relative hidden flex-nowrap pl-4 tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50 md:flex ">
-          {menu.map((link) => (
-            <li class={`${isActive(link.href) ? "active font-semibold" : ""}`}>
-              <a href={link.href} class={`block py-3`}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+<header class="fixed top-0 left-0 right-0 w-full z-50" transition:name="nav">
+  <nav class="container-xl flex items-center gap-6 justify-between bg-transparent">
+    <!-- Logo and Menu (Left Side) -->
+    <div class="logo-container">
+      <a
+        href="#"
+        aria-label={title}
+        class="grid place-items-center text-primary"
+      >
+        <Icon name="logo" class="h-40 w-40 max-w-full" />
+      </a>
+      {menu?.filter((item) => item.href).map((link) => (
+        <li class={`text-white ${isActive(link.href) ? "active font-semibold" : ""}`}>
+          <a href={link.href} class="block py-3 hover:text-white/80">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </div>
 
-    {
-      (
-        <ul class="nav-underline relative -mr-4  ml-auto flex flex-nowrap justify-end pl-4 md:mr-0">
-          <li>
-            <CartButton
-              label={t("cart")}
-              client:idle
-              transition:persist
-              transition:name="cart"
+    <!-- Menu items on the extreme right -->
+    <ul class="nav-underline relative -mr-4 ml-auto flex flex-nowrap justify-end pl-4 md:mr-0">
+      <li>
+        <CartButton
+          label={t("cart")}
+          client:idle
+          transition:persist
+          transition:name="cart"
+          class="text-white"
+        >
+          <Icon name="shopping-cart" class="h-6 w-6" />
+        </CartButton>
+      </li>
+      <li class="text-white">
+        <PageFind />
+      </li>
+
+      {social &&
+        social.slice(0, 3).map((link) => (
+          <li class="hidden md:block">
+            <a
+              href={link.href}
+              class="grid h-full place-items-center text-white hover:text-white/80"
+              target="_blank"
+              aria-label={link.label}
             >
-              <Icon name="shopping-cart" class="h-6 w-6" />
-            </CartButton>
+              <Icon name={link.icon} class="w-6 h-6" />
+            </a>
           </li>
-          <li>
-            <PageFind />
-          </li>
+        ))}
 
-          {social &&
-            social.slice(0, 3).map((link) => (
-              <li class="hidden md:block">
-                <a
-                  href={link.href}
-                  class="grid h-full place-items-center"
-                  target="_blank"
-                  aria-label={link.label}
-                >
-                  <Icon name={link.icon} class="w-6 h-6" />
+      <li class="text-white">
+        <ColorSwitch client:idle />
+      </li>
+
+      <li class="md:hidden">
+        <NavMobile
+          client:idle
+          translations={{ menu: t("menu"), close: t("close") }}
+        >
+          <Icon name="menu-solid" class="h-10 w-10 text-white" slot="menu" />
+          <Icon name="close" class="h-10 w-10 text-white" slot="close" />
+          <Icon name="logo" class="w-full" slot="logo" />
+          <ul class="mobile-links nav-links mt-3 w-full text-center" slot="links">
+            {menu.map((link, index) => (
+              <li
+                style={`--animation-delay: ${(index + 1) * 100}ms`}
+                class={`title-md inner w-full border-2 border-transparent transition-all duration-1000 hover:border-current ${
+                  isActive(link.href) ? "active font-semibold text-white" : "text-white"
+                }`}
+              >
+                <a href={link.href} class="block py-3">
+                  {link.label}
                 </a>
               </li>
             ))}
+          </ul>
 
-          <li>
-            <ColorSwitch client:idle />
-          </li>
-
-          <li class="md:hidden">
-            <NavMobile
-              client:idle
-              translations={{ menu: t("menu"), close: t("close") }}
-            >
-              <Icon name="menu-solid" class="h-10 w-10" slot="menu" />
-
-              <Icon name="close" class="h-10 w-10" slot="close" />
-              <Icon name="logo" class="w-full" slot="logo" />
-              <ul
-                class="mobile-links nav-links mt-3 w-full text-center"
-                slot="links"
-              >
-                {menu.map((link, index) => (
-                  <li
-                    style={`--animation-delay: ${(index + 1) * 100}ms`}
-                    class={`title-md inner w-full border-2 border-transparent transition-all duration-1000 hover:border-current  ${
-                      isActive(link.href)
-                        ? "active font-semibold text-primary"
-                        : ""
-                    }`}
-                  >
-                    <a href={link.href} class={`block py-3`}>
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-
-              <ul
-                class="relatives flex w-full flex-wrap justify-center gap-2 py-4"
-                slot="social"
-              >
-                {social.map((link, index) => (
-                  <li
-                    class="inner"
-                    style={`--animation-delay: ${(index + 1) * 100}ms`}
-                  >
-                    <a
-                      href={link.href}
-                      class="grid h-full place-items-center "
-                      target="_blank"
-                      aria-label={link.label}
-                    >
-                      <Icon name={link.icon} class="h-8 w-8" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </NavMobile>
-          </li>
-        </ul>
-      )
-    }
+          <ul class="relatives flex w-full flex-wrap justify-center gap-2 py-4" slot="social">
+            {social.map((link, index) => (
+              <li class="inner text-white" style={`--animation-delay: ${(index + 1) * 100}ms`}>
+                <a href={link.href} class="grid h-full place-items-center" target="_blank" aria-label={link.label}>
+                  <Icon name={link.icon} class="h-8 w-8" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </NavMobile>
+      </li>
+    </ul>
   </nav>
 </header>
+
 <style>
-  .nav {
-    @apply transition-transform duration-500;
-    ul {
-      --_gap: 1rem;
-    }
-    .nav-underline li:not(ul li ul li) {
+  .nav-underline {
+    --_gap: 1rem;
+    
+    li:not(ul li ul li) {
       @apply relative overflow-hidden;
       padding: calc(var(--_gap) / 2);
       min-inline-size: 1.3rem;
 
       &::after {
-        @apply absolute rounded-full bg-primary;
+        @apply absolute rounded-full bg-white;
         content: "";
         inset-inline: 0;
         inset-block-end: 0;
@@ -159,16 +137,46 @@ const isActive = (href) => {
         --_scale-delay: 200ms;
       }
     }
-    &:hover li {
-      --_translate: 100%;
-      --_scale-delay: 200ms;
-    }
+  }
 
-    li:hover {
-      --_scale: 1;
-      --_translate: 0;
-      --_scale-delay: 0ms;
-      @apply text-primary;
+  .nav-underline:hover li {
+    --_translate: 100%;
+    --_scale-delay: 200ms;
+  }
+
+  .nav-underline li:hover {
+    --_scale: 1;
+    --_translate: 0;
+    --_scale-delay: 0ms;
+    @apply text-white/80;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .menu-custom {
+    font-family: "Times New Roman", serif;
+    font-size: 1rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .menu-custom li a {
+    transition: color 0.2s ease;
+    &:hover {
+      @apply text-white/80;
     }
   }
+
+   :global(.dark) {
+    .color-switch-icon {
+      color: #FF0000 !important;
+    }
+  }
+</style>
 </style>

@@ -1,36 +1,32 @@
 <template>
-<div class="sticky top-0 z-50">
-<button
-    :aria-label="show ? translations.close : translations.menu"
-    @click="toggleMenu()"
-    :class="` nav-mobile-btn relative  ml-auto flex  text-primary md:hidden ${
-      show ? 'bg-transparent ' : ''
-    }`"
-  >
-    <slot name="menu" class="w-7 text-dark" v-if="!show" />
-
-    <slot name="close" class="w-7" v-if="show" />
-  </button>
-  
-  <transition name="nested">
-    <div
-      class="surface-menu nav-mobile fixed inset-0 grid h-full auto-rows-min place-items-center gap-4 px-4 pt-4"
-      v-show="show"
+  <div class="absolute top-0 right-0 z-50">
+    <button 
+      :aria-label="show ? translations.close : translations.menu" 
+      @click="toggleMenu()" 
+      :class="`nav-mobile-btn relative ml-auto flex text-primary md:hidden ${show ? 'bg-transparent' : ''}`"
     >
-      <div class="mx-auto max-w-[12rem] pt-10">
-        <slot name="logo" />
+      <slot name="menu" class="w-7 text-dark" v-if="!show" />
+      <slot name="close" class="w-7" v-if="show" />
+    </button>
+
+    <transition name="nested">
+      <div
+        class="nav-mobile fixed inset-0 grid h-full auto-rows-min place-items-center gap-4 px-4 pt-4 bg-black/50 backdrop-blur-sm"
+        v-show="show"
+      >
+        <div class="mx-auto max-w-[18rem] pt-10">
+          <slot name="logo" />
+        </div>
+        <slot name="links" />
+        <slot name="social" />
       </div>
-      <slot name="links" />
-      <slot name="social" />
-    </div>
-  </transition>
-  
-</div>
+    </transition>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { useScrollLock } from "@vueuse/core";
+import { onMounted, ref } from "vue";
 const show = ref(false);
 const body = ref(null);
 const props = defineProps({
@@ -44,7 +40,6 @@ let isLocked;
 
 onMounted(() => {
   body.value = document.getElementsByTagName("body")[0];
-
   isLocked = useScrollLock(body.value);
 });
 </script>

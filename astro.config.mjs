@@ -37,6 +37,7 @@ export default defineConfig({
           "pro--distribution",
           "proi--storage",
           "pro-order-complete",
+          "map-marker",
         ],
       },
       paths: {

@@ -70,7 +70,7 @@ const { slug } = Astro.params;
   <div
     class="absolute inset-0 z-10 grid place-items-center bg-dark bg-opacity-20"
   >
-    <div class="container-xl py-8">
+    <div class="container-xl">
       <div class="max-w-3xl">
         {
           pubDate && (
@@ -125,12 +125,12 @@ const { slug } = Astro.params;
 <style>
   .hero {
     @screen sm {
-      min-height: calc(100svh - 4rem);
+      min-height: 100vh; /* Ensure it spans the full height */
     }
   }
   .media {
     @screen sm {
-      max-height: calc(100svh - 4rem);
+      max-height: 100vh; /* Match the height of the hero */
     }
   }
 </style>

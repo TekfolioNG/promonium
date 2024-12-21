@@ -1,0 +1,103 @@
+---
+import Layout from "@layouts/BaseLayout.astro";
+---
+
+<Layout title="Contact Promonium">
+  <div class="min-h-screen flex items-center justify-center p-6 bg-gray-50">
+    <div class="max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+      <!-- Image Section -->
+      <div class="md:w-1/2">
+        <img 
+          src="/src/assets/contact-us-promonium.jpg" 
+          alt="Contact Us" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Form Section -->
+      <div class="md:w-1/2 p-6" style="background-color: #F0FDFF;">
+        <h1 class="text-2xl font-bold mb-2">Talk to Us</h1>
+        <p class="text-gray-600 mb-6 text-sm">
+          Have a question or need a logistics solution? Reach out and let's discuss how we can support your goods transportation and warehousing needs.
+        </p>
+
+        <form action="mailto:info@promoniumng.com" method="POST" enctype="text/plain" class="space-y-4">
+          <div>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Name *"
+              required
+              class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <select
+              id="subject"
+              name="subject"
+              required
+              class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-500"
+            >
+              <option value="">Select a topic *</option>
+              <option value="custom">I need help with a custom logistics solution</option>
+              <option value="immediate">I have a shipment that needs immediate attention</option>
+              <option value="storage">I want to know more about your storage options</option>
+              <option value="quote">Can you provide a quote for my project?</option>
+              <option value="partnership">How can I partner with you for my business needs?</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Phone Number *"
+              required
+              class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <textarea
+              id="message"
+              name="message"
+              rows="3"
+              placeholder="Message"
+              class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            ></textarea>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="py-2 px-6 text-white rounded-md hover:bg-blue-900 transition-colors"
+              style="background-color: #000066;"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  input, select, textarea {
+    @apply p-2;
+  }
+</style>
