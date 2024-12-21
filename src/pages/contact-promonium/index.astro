@@ -3,12 +3,20 @@ import Layout from "@layouts/BaseLayout.astro";
 ---
 
 <Layout title="Contact Promonium">
-  <div class="min-h-screen flex items-center justify-center p-6 bg-gray-50">
+  <div 
+    class="min-h-screen flex items-center justify-center p-6"
+    style={{
+      backgroundImage: "url('/header-image-promonium4.jpg')", // Moved to public directory
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat"
+    }}
+  >
     <div class="max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
       <!-- Image Section -->
       <div class="md:w-1/2">
         <img 
-          src="/src/assets/contact-us-promonium.jpg" 
+          src="/contact-us-promonium.jpg" // Moved to public directory
           alt="Contact Us" 
           class="w-full h-full object-cover"
         />
