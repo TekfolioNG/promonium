@@ -6,7 +6,7 @@ import Layout from "@layouts/BaseLayout.astro";
   <div 
     class="min-h-screen flex items-center justify-center p-6"
     style={{
-      backgroundImage: "url('/header-image-promonium4.jpg')", // Moved to public directory
+      backgroundImage: "url('/header-image-promonium4.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat"
@@ -16,7 +16,7 @@ import Layout from "@layouts/BaseLayout.astro";
       <!-- Image Section -->
       <div class="md:w-1/2">
         <img 
-          src="/contact-us-promonium.jpg" // Moved to public directory
+          src="/contact-us-promonium.jpg"
           alt="Contact Us" 
           class="w-full h-full object-cover"
         />
@@ -29,7 +29,7 @@ import Layout from "@layouts/BaseLayout.astro";
           Have a question or need a logistics solution? Reach out and let's discuss how we can support your goods transportation and warehousing needs.
         </p>
 
-        <form action="mailto:info@promoniumng.com" method="POST" enctype="text/plain" class="space-y-4">
+        <form id="contactForm" class="space-y-4">
           <div>
             <input
               type="text"
@@ -89,9 +89,14 @@ import Layout from "@layouts/BaseLayout.astro";
             ></textarea>
           </div>
 
+          <div id="submitStatus" class="text-green-600 hidden">
+            Message sent successfully!
+          </div>
+
           <div>
             <button
               type="submit"
+              id="submitButton"
               class="py-2 px-6 text-white rounded-md hover:bg-blue-900 transition-colors"
               style="background-color: #000066;"
             >
@@ -103,6 +108,62 @@ import Layout from "@layouts/BaseLayout.astro";
     </div>
   </div>
 </Layout>
+
+<script>
+  const form = document.getElementById('contactForm');
+  const submitButton = document.getElementById('submitButton');
+  const submitStatus = document.getElementById('submitStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Change button text to show loading
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      
+      // Show success message
+      submitStatus.textContent = result.message;
+      submitStatus.classList.remove('hidden');
+      submitStatus.classList.add('text-green-600');
+      submitStatus.classList.remove('text-red-600');
+      form.reset();
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        submitStatus.classList.add('hidden');
+      }, 3000);
+    } catch (error) {
+      console.error('Error:', error);
+      submitStatus.textContent = 'Error sending message. Please try again.';
+      submitStatus.classList.remove('hidden');
+      submitStatus.classList.remove('text-green-600');
+      submitStatus.classList.add('text-red-600');
+    } finally {
+      // Reset button
+      submitButton.textContent = 'Submit';
+      submitButton.disabled = false;
+    }
+  });
+</script>
 
 <style>
   input, select, textarea {
