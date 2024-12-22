@@ -23,6 +23,7 @@ const m2dxOptions = {
 // https://astro.build/config
 export default defineConfig({
   site: "https://promoniumng.com",
+  publicDir: "public",
   integrations: [
     icon({
       include: {
@@ -53,7 +54,7 @@ export default defineConfig({
     }),
     astroImageTools,
   ],
-  
+
   markdown: {
     extendDefaultPlugins: true,
     remarkPlugins: [
